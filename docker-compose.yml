@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+   db:
+     image: mysql:latest
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: my-secret-pw
+       MYSQL_DATABASE: laravel
+       MYSQL_USER: laravel
+       MYSQL_PASSWORD: laravel
+     deploy:
+       resources:
+         limits:
+           cpus: '1'
+           memory: '350M'
+   laravel:
+     depends_on:
+       - db
+     image: tutagomes/laravel-loadtest:latest
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       DB_HOST: db
+       DB_PORT: 3306
+       DB_DATABASE: laravel
+       DB_USERNAME: laravel
+       DB_PASSWORD: laravel
+     deploy:
+       resources:
+         limits:
+           cpus: '1'
+           memory: '350M'
+
+      

@@ -1,0 +1,4 @@
+vendor
+storage/logs/*
+node_modules
+Dockerfile
