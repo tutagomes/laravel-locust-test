@@ -1,11 +1,10 @@
 # Restoring Composer Dependencies
-FROM composer:1.7 as vendor
+FROM tutagomes/larabed:build as base
 
-COPY database/ database/
+WORKDIR /app
 
-COPY composer.json composer.json
-COPY composer.lock composer.lock
 
+COPY . .
 RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
@@ -21,8 +20,13 @@ FROM tutagomes/larabed:latest
 
 WORKDIR /var/www/html
 
-COPY . /var/www/html
 COPY .env.example .env
-COPY --from=vendor /app/vendor/ /var/www/html/vendor/
+COPY --from=base /app /var/www/html
+COPY --from=base /usr/local/bin/composer /usr/local/bin/composer
 
-RUN chown www-data:www-data -R *
+# Removendo pasta caso exista
+RUN rm -rf /var/www/html/public/storage || true
+
+RUN chown -R www-data:www-data *
+RUN composer dump-autoload
+

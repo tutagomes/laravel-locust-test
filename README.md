@@ -6,6 +6,7 @@ Para subir o ambiente, basta executar:
 docker-compose --compatibility up -d
 
 # lembre-se de entrar no contêiner do laravel e executar os comandos:
+docker exec -ti laravel-locust-test_laravel_1 /bin/bash
 
 php artisan migrate
 php artisan key:generate
@@ -19,4 +20,11 @@ Para executar os testes diretamente:
 pip3 install locustio
 
 locust -f locust/teste<number>.py –H http://127.0.0.1:8080
+
+```
+
+Ou se preferir com Docker
+
+```
+ docker run -p 8089:8089 -v $PWD/locust:/mnt/locust --network=network-todo locustio/locust -f /mnt/locust/teste_exemplo.py
 ```
