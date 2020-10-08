@@ -26,5 +26,6 @@ locust -f locust/teste<number>.py –H http://127.0.0.1:8080
 Ou se preferir com Docker
 
 ```
- docker run -p 8089:8089 -v $PWD/locust:/mnt/locust --network=network-todo locustio/locust -f /mnt/locust/teste_exemplo.py
+ docker run -p 8089:8089 -v $PWD/locust:/mnt/locust --network=network-todo locustio/locust -f /mnt/locust/teste_exemplo.py http://teste-carga_laravel_1:80
 ```
+
